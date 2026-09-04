@@ -41,7 +41,8 @@ youtube-shorts-scheduler/
 │   └── videos.js                    # Frontend browser bundle for videos
 ├── frontend/                        # Static GitHub Pages Dashboard UI
 │   ├── index.html                   # Dashboard markup
-│   ├── privacy.html                 # Privacy policy & terms of service (Google OAuth compliant)
+│   ├── privacy.html                 # Privacy policy (Google OAuth compliant)
+│   ├── terms.html                   # Terms of service (YouTube API compliant)
 │   ├── style.css                    # Responsive dark theme
 │   └── app.js                       # Dashboard logic & visualizer
 ├── scripts/
