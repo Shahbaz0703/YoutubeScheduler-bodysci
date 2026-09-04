@@ -21,32 +21,30 @@ const CLIENT_SECRET = process.env.YOUTUBE_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.YOUTUBE_REFRESH_TOKEN;
 const PRIVACY_STATUS = (process.env.YOUTUBE_PRIVACY_STATUS || 'public').toLowerCase();
 
-const DEFAULT_CHANNEL_DESCRIPTION = `Welcome to Ehte's Wanderlens ❤️
+const DEFAULT_CHANNEL_DESCRIPTION = `Welcome to BodySci Edu — created and presented by Shahbaz Alam.
 
-A journey of bikes, roads, travel, emotions and unforgettable moments. 🏍️✨
-Here you’ll find cinematic bike rides, travel adventures, scenic views, Shayari, love, motivation and moments captured straight from the heart.
+Discover what happens inside the human body through AI-assisted 3D visualization and educational visual storytelling.
 
-📸 Instagram: https://www.instagram.com/wanderlens_28
-▶️ YouTube: Ehte's Wanderlens
+Our videos explore human anatomy, organs, digestion, physiology, pregnancy, reproductive health, conception, and fascinating biological processes in a simple and easy-to-understand way.
 
-If you love riding, travelling, exploring new places and feeling every moment, you’re in the right place. 🌍❤️
+All content is independently conceptualized, designed, and curated by Shahbaz Alam. AI tools are used as visual aids for educational demonstrations, not as automated content production.
 
-Subscribe to Ehte's Wanderlens and join the journey. 🔔
+⚠️ EDUCATIONAL DISCLAIMER:
+This content is for general educational and learning purposes only. It is not medical advice and should not be used for diagnosis or treatment. For personal medical concerns, consult a qualified healthcare professional.
 
---------------------------------------------------
-Keywords & SEO Tags:
-emotional status, sad status, heart touching status, broken heart status, sad quotes hindi, emotional quotes hindi, dard bhara status, hindi status, sad shayari, heart touching shayari, viral shorts, youtube shorts, instagram reels, emotional video hindi, feeling lonely status, motivational shayari hindi, romantic status, breakup status, deep life quotes, bike rider status, cinematic travel shorts, reels instagram, trending shorts, status video
+Subscribe to BodySci Edu to explore and understand the human body.
 
-#EhtesWanderlens #Wanderlens28 #BikeRide #TravelVlog #BikeVlog #Travel #Shayari #Motivation #Love #RoadTrip #BikerLife #SadShayari #EmotionalStatus #ViralShorts #YouTubeShorts #InstagramReels`;
+BodySci Edu — Explore. Understand. Learn the Human Body.
+
+#Anatomy #HealthFacts #HumanBody #MedicalEducation #alteredcontent`;
 
 const DEFAULT_CHANNEL_TAGS = [
-  "Ehtes Wanderlens", "Wanderlens 28", "Wanderlens", "emotional status",
-  "sad status", "heart touching status", "sad quotes hindi", "sad shayari",
-  "youtube shorts", "instagram reels", "bike ride", "bike vlog",
-  "travel vlog", "road trip", "cinematic ride", "travel reels",
-  "Hindi shayari", "Hinglish shayari", "love shayari", "motivational shayari",
-  "romantic quotes", "life quotes", "biker lifestyle", "India travel",
-  "scenic rides"
+  "human body", "anatomy", "human anatomy", "anatomy fact", "health facts",
+  "medical facts", "health education", "medical education", "science facts",
+  "biology", "food fact", "nutrition", "food digestion", "digestion",
+  "digestive system", "healthy food", "pregnancy", "pregnancy facts",
+  "pregnancy health", "pregnancy safety", "pregnancy education",
+  "pregnancy foods", "foods during pregnancy", "pregnancy positions", "ai"
 ];
 
 /**

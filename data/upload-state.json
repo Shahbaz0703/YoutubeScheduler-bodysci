@@ -1,29 +1,4 @@
 {
-  "nextVideoIndex": 24,
-  "uploadedVideos": [
-    "Video_001.MOV",
-    "Video_002.MOV",
-    "Video_003.MOV",
-    "Video_004.MOV",
-    "Video_005.MOV",
-    "Video_006.MOV",
-    "Video_007.MOV",
-    "Video_008.MOV",
-    "Video_009.MOV",
-    "Video_010.MOV",
-    "Video_011.MOV",
-    "Video_012.MOV",
-    "Video_013.MOV",
-    "Video_014.MOV",
-    "Video_015.MOV",
-    "Video_016.MOV",
-    "Video_017.MOV",
-    "Video_018.MOV",
-    "Video_019.MOV",
-    "Video_020.MOV",
-    "Video_021.MOV",
-    "Video_022.MOV",
-    "Video_023.MOV",
-    "Video_024.MOV"
-  ]
+  "nextVideoIndex": 0,
+  "uploadedVideos": []
 }
