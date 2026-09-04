@@ -97,7 +97,7 @@ async function uploadVideo() {
           tags: sanitizeTags(targetVideo.tags || [])
         },
         status: {
-          privacyStatus: 'private', // Test mode: private upload
+          privacyStatus: ['private', 'unlisted', 'public'].includes(process.env.YOUTUBE_PRIVACY_STATUS) ? process.env.YOUTUBE_PRIVACY_STATUS : 'public',
           selfDeclaredMadeForKids: false
         }
       },
