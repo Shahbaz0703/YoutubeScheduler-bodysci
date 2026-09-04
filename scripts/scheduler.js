@@ -14,7 +14,20 @@ const __dirname = path.dirname(__filename);
 
 const VIDEOS_DIR = path.join(__dirname, '../videos');
 const UPLOAD_STATE_FILE = path.join(__dirname, '../data/upload-state.json');
+const SCHEDULE_FILE = path.join(__dirname, '../data/schedule.json');
 const SUPPORTED_EXTENSIONS = new Set(['.mp4', '.mov', '.m4v', '.webm']);
+
+/**
+ * Loads schedule configuration safely
+ */
+function loadScheduleConfig() {
+  try {
+    if (fs.existsSync(SCHEDULE_FILE)) {
+      return JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf-8'));
+    }
+  } catch (e) {}
+  return null;
+}
 
 const CLIENT_ID = process.env.YOUTUBE_CLIENT_ID;
 const CLIENT_SECRET = process.env.YOUTUBE_CLIENT_SECRET;
@@ -141,6 +154,23 @@ function fetchTargetLfsFile(fileName) {
  */
 async function runScheduler() {
   validateEnv();
+
+  // Safety check: ensure current date is not before startDate in schedule configuration
+  const scheduleConfig = loadScheduleConfig();
+  if (scheduleConfig && scheduleConfig.startDate && process.env.FORCE_UPLOAD !== 'true') {
+    const tz = scheduleConfig.timezone || 'Asia/Kolkata';
+    const todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: tz }).format(new Date());
+    if (todayStr < scheduleConfig.startDate) {
+      console.log('========================================');
+      console.log('SCHEDULE NOT STARTED YET');
+      console.log('========================================');
+      console.log(`Current Date (${tz}): ${todayStr}`);
+      console.log(`Scheduled Start Date: ${scheduleConfig.startDate}`);
+      console.log(`Videos are configured to begin uploading tomorrow (${scheduleConfig.startDate}).`);
+      console.log('Skipping upload run. Exiting safely without error.');
+      process.exit(0);
+    }
+  }
 
   // 1. Scan videos directory pointer files
   if (!fs.existsSync(VIDEOS_DIR)) {
