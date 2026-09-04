@@ -15,9 +15,9 @@ const SCHEDULE_JS_FILE = path.join(__dirname, '../data/schedule.js');
 function loadScheduleConfig() {
   const defaultConfig = {
     enabled: true,
-    startDate: "2026-08-10",
+    startDate: "2026-09-05",
     videosPerDay: 2,
-    uploadTimes: ["12:30", "19:30"],
+    uploadTimes: ["08:00", "18:00"],
     timezone: "Asia/Kolkata"
   };
 
