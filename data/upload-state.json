@@ -1,6 +1,4 @@
 {
-  "nextVideoIndex": 1,
-  "uploadedVideos": [
-    "Video_001.mp4"
-  ]
+  "nextVideoIndex": 0,
+  "uploadedVideos": []
 }
