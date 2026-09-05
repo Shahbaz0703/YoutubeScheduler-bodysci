@@ -17,7 +17,7 @@ function loadScheduleConfig() {
     enabled: true,
     startDate: "2026-09-05",
     videosPerDay: 2,
-    uploadTimes: ["08:00", "18:00"],
+    uploadTimes: ["03:30", "13:30"],
     timezone: "Asia/Kolkata"
   };
 
