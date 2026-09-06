@@ -181,85 +181,62 @@ class DashboardApp {
       }
     });
 
-    // 2. Build set of dates (YYYY-MM-DD) occupied by Published videos
-    const publishedDatesSet = new Set();
-    this.videos.forEach(v => {
-      if (v.effectiveStatus === 'published' && v.publishedDisplayDate) {
-        const d = new Date(v.publishedDisplayDate);
-        if (!isNaN(d.getTime())) {
-          publishedDatesSet.add(this.getLocalDateString(d));
-        }
-      }
-    });
-
-    // 3. Determine base start date for dynamic slot allocation:
-    // Slots for unuploaded videos start on or after the NEXT available date relative to latest published video or today
-    const now = new Date();
-    let baseStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-    let latestPublishedDate = null;
-    this.videos.forEach(v => {
-      if (v.effectiveStatus === 'published' && v.publishedDisplayDate) {
-        const d = new Date(v.publishedDisplayDate);
-        if (!isNaN(d.getTime())) {
-          if (!latestPublishedDate || d > latestPublishedDate) {
-            latestPublishedDate = d;
-          }
-        }
-      }
-    });
-
-    if (latestPublishedDate) {
-      const nextDayAfterPublished = new Date(latestPublishedDate.getFullYear(), latestPublishedDate.getMonth(), latestPublishedDate.getDate() + 1);
-      if (nextDayAfterPublished > baseStartDate) {
-        baseStartDate = nextDayAfterPublished;
-      }
-    }
-
+    // 2. Assign effective scheduled dates
+    // If the video already has an authoritative scheduledAt timestamp from videos.json, preserve it
     const vpd = Math.min(2, Math.max(1, parseInt(this.scheduleConfig.videosPerDay, 10) || 1));
     const uploadTimes = (this.scheduleConfig.uploadTimes && this.scheduleConfig.uploadTimes.length > 0)
       ? this.scheduleConfig.uploadTimes
-      : ['11:00'];
+      : ['10:00', '15:00'];
 
-    // 4. Dynamically assign available publishing slots to remaining unuploaded videos (failed, scheduled, pending)
-    let currDate = new Date(baseStartDate.getFullYear(), baseStartDate.getMonth(), baseStartDate.getDate());
-    let slotIdx = 0;
-    const usedDatesSet = new Set(publishedDatesSet);
-
-    // Record original scheduled dates of failed videos
+    // Count published videos per date (YYYY-MM-DD in local time)
+    const publishedCountByDate = {};
     this.videos.forEach(v => {
-      if (v.effectiveStatus === 'failed' && v.scheduledAt) {
-        const fDate = new Date(v.scheduledAt);
-        if (!isNaN(fDate.getTime())) {
-          usedDatesSet.add(this.getLocalDateString(fDate));
+      if (v.effectiveStatus === 'published' && v.publishedDisplayDate) {
+        const d = new Date(v.publishedDisplayDate);
+        if (!isNaN(d.getTime())) {
+          const ds = this.getLocalDateString(d);
+          publishedCountByDate[ds] = (publishedCountByDate[ds] || 0) + 1;
         }
       }
     });
 
+    const now = new Date();
+    let currDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayStr = this.getLocalDateString(currDate);
+    let slotIdx = publishedCountByDate[todayStr] || 0;
+    if (slotIdx >= vpd) {
+      currDate.setDate(currDate.getDate() + 1);
+      slotIdx = 0;
+    }
+
     this.videos.forEach(v => {
-      if (v.effectiveStatus !== 'published') {
-        // Find next available slot date that is not in usedDatesSet
+      if (v.effectiveStatus === 'published') {
+        v.effectiveScheduledAt = v.publishedDisplayDate || v.scheduledAt || null;
+      } else if (v.scheduledAt && (v.status === 'scheduled' || v.effectiveStatus === 'scheduled')) {
+        // Authoritative scheduled timestamp from data/videos.json
+        v.effectiveScheduledAt = v.scheduledAt;
+      } else {
+        // Dynamically assign next available publishing slot
         while (true) {
           const dateStr = this.getLocalDateString(currDate);
-          if (!usedDatesSet.has(dateStr)) {
-            const timeStr = uploadTimes[slotIdx % vpd] || uploadTimes[0] || '11:00';
+          const publishedOnDate = publishedCountByDate[dateStr] || 0;
+
+          if (slotIdx + publishedOnDate < vpd) {
+            const actualSlot = (slotIdx + publishedOnDate) % vpd;
+            const timeStr = uploadTimes[actualSlot] || uploadTimes[0] || '10:00';
             v.effectiveScheduledAt = this.createKolkataIso(currDate, timeStr);
 
             slotIdx++;
-            if (slotIdx >= vpd) {
-              usedDatesSet.add(dateStr);
+            if (slotIdx + publishedOnDate >= vpd) {
               currDate.setDate(currDate.getDate() + 1);
               slotIdx = 0;
             }
             break;
           } else {
-            // Date is occupied by a published video, failure attempt date, or previous slot: advance to next day
             currDate.setDate(currDate.getDate() + 1);
             slotIdx = 0;
           }
         }
-      } else {
-        v.effectiveScheduledAt = v.publishedDisplayDate || v.scheduledAt || null;
       }
     });
   }

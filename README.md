@@ -7,7 +7,7 @@ A serverless, zero-cost automated YouTube Shorts scheduler for personal channels
 ## 📅 Schedule Overview
 
 - **Daily Upload Target**: Exactly **2 Shorts per day**
-  - **Execution Times**: **3:30 AM and 1:30 PM Asia/Kolkata** (22:00 and 08:00 UTC)
+  - **Execution Times**: **10:00 AM and 3:00 PM Asia/Kolkata** (04:30 and 09:30 UTC)
 - **Execution Mechanism**: GitHub Actions cron task + Node.js selective LFS runner.
 - **Workflow Scope**: Each workflow execution uploads **ONLY ONE video** sequentially (2 runs per day = 2 videos per day).
 
