@@ -17,7 +17,7 @@ function loadScheduleConfig() {
     enabled: true,
     startDate: "2026-09-05",
     videosPerDay: 2,
-    uploadTimes: ["10:00", "15:00"],
+    uploadTimes: ["06:00", "12:30"],
     timezone: "Asia/Kolkata"
   };
 
@@ -85,7 +85,7 @@ function runScheduler() {
   }
 
   const vpd = Math.min(2, Math.max(1, config.videosPerDay || 1));
-  const uploadTimes = config.uploadTimes || ["12:30", "19:30"];
+  const uploadTimes = config.uploadTimes || ["06:00", "12:30"];
   
   // Parse start date
   let startDate = new Date(config.startDate || new Date().toISOString().split('T')[0]);
@@ -107,7 +107,7 @@ function runScheduler() {
 
   while (pendingIdx < pendingVideos.length) {
     for (let slot = 0; slot < vpd && pendingIdx < pendingVideos.length; slot++) {
-      const timeStr = uploadTimes[slot] || (slot === 0 ? "12:30" : "19:30");
+      const timeStr = uploadTimes[slot] || (slot === 0 ? "06:00" : "12:30");
       const scheduledIso = createKolkataTimestamp(currentDate, timeStr);
       const video = pendingVideos[pendingIdx];
 

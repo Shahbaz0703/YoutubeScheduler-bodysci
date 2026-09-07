@@ -186,7 +186,7 @@ class DashboardApp {
     const vpd = Math.min(2, Math.max(1, parseInt(this.scheduleConfig.videosPerDay, 10) || 1));
     const uploadTimes = (this.scheduleConfig.uploadTimes && this.scheduleConfig.uploadTimes.length > 0)
       ? this.scheduleConfig.uploadTimes
-      : ['10:00', '15:00'];
+      : ['06:00', '12:30'];
 
     // Count published videos per date (YYYY-MM-DD in local time)
     const publishedCountByDate = {};
@@ -223,7 +223,7 @@ class DashboardApp {
 
           if (slotIdx + publishedOnDate < vpd) {
             const actualSlot = (slotIdx + publishedOnDate) % vpd;
-            const timeStr = uploadTimes[actualSlot] || uploadTimes[0] || '10:00';
+            const timeStr = uploadTimes[actualSlot] || uploadTimes[0] || '06:00';
             v.effectiveScheduledAt = this.createKolkataIso(currDate, timeStr);
 
             slotIdx++;
@@ -372,8 +372,8 @@ class DashboardApp {
 
     if (startDateInput) startDateInput.value = this.scheduleConfig.startDate || '2026-08-10';
     if (vpdSelect) vpdSelect.value = String(this.scheduleConfig.videosPerDay || 2);
-    if (time1Input) time1Input.value = (this.scheduleConfig.uploadTimes && this.scheduleConfig.uploadTimes[0]) || '12:30';
-    if (time2Input) time2Input.value = (this.scheduleConfig.uploadTimes && this.scheduleConfig.uploadTimes[1]) || '19:30';
+    if (time1Input) time1Input.value = (this.scheduleConfig.uploadTimes && this.scheduleConfig.uploadTimes[0]) || '06:00';
+    if (time2Input) time2Input.value = (this.scheduleConfig.uploadTimes && this.scheduleConfig.uploadTimes[1]) || '12:30';
 
     if (time2Input && vpdSelect) {
       time2Input.style.display = vpdSelect.value === '1' ? 'none' : 'block';

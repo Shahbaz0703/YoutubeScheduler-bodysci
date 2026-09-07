@@ -2,8 +2,9 @@ name: YouTube Shorts Automated Scheduler
 
 on:
   schedule:
-    # 10:00 AM and 3:00 PM India Standard Time (IST) = 04:30 and 09:30 UTC
-    - cron: '30 4,9 * * *'
+    # 6:00 AM and 12:30 PM India Standard Time (IST) = 00:30 and 07:00 UTC
+    - cron: '30 0 * * *'
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 concurrency:
