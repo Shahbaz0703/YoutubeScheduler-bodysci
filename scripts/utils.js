@@ -42,10 +42,29 @@ export function formatJsonWithSingleLineTags(dataObj) {
 }
 
 /**
+ * Calculates YouTube tag character count exactly matching YouTube Studio / API:
+ * - Multi-word tags (containing spaces) are counted with surrounding quotation marks ("tag" = tag.length + 2)
+ * - Single-word tags are counted by their character length
+ * - Tags are separated by commas (adds 1 char per separator)
+ * @param {Array<string>} tags
+ * @returns {number} Exact YouTube character count
+ */
+export function calculateYouTubeTagsLength(tags = []) {
+  if (!Array.isArray(tags) || tags.length === 0) return 0;
+  let total = 0;
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags[i];
+    total += tag.includes(' ') ? tag.length + 2 : tag.length;
+  }
+  total += (tags.length - 1);
+  return total;
+}
+
+/**
  * Sanitizes and truncates video tags array to comply with YouTube Data API constraints:
  * - Each tag is a clean string without angle brackets (< >)
  * - Each tag <= 100 characters
- * - Total character length of all tags joined <= maxTotalLength (default 480 chars to stay under YouTube's 500 limit)
+ * - Total character length calculated using YouTube's exact rules <= maxTotalLength (default 480 chars to stay safely under YouTube's 500 limit)
  * @param {Array<string>} tags 
  * @param {number} maxTotalLength 
  * @returns {Array<string>} Safe array of tags
@@ -63,7 +82,8 @@ export function sanitizeTags(tags = [], maxTotalLength = 480) {
       cleanTag = cleanTag.substring(0, 100).trim();
     }
     
-    const addedLen = safeTags.length === 0 ? cleanTag.length : cleanTag.length + 1;
+    const tagChars = cleanTag.includes(' ') ? cleanTag.length + 2 : cleanTag.length;
+    const addedLen = safeTags.length === 0 ? tagChars : tagChars + 1;
     if (currentLength + addedLen > maxTotalLength) {
       break;
     }

@@ -52,12 +52,14 @@ BodySci Edu — Explore. Understand. Learn the Human Body.
 #Anatomy #HealthFacts #HumanBody #MedicalEducation #alteredcontent`;
 
 const DEFAULT_CHANNEL_TAGS = [
+  "BodySci Edu",
   "human body", "anatomy", "human anatomy", "anatomy fact", "health facts",
   "medical facts", "health education", "medical education", "science facts",
   "biology", "food fact", "nutrition", "food digestion", "digestion",
   "digestive system", "healthy food", "pregnancy", "pregnancy facts",
   "pregnancy health", "pregnancy safety", "pregnancy education",
-  "pregnancy foods", "foods during pregnancy", "pregnancy positions", "ai"
+  "pregnancy foods", "foods during pregnancy", "pregnancy positions", "ai",
+  "physiology", "human physiology", "3d anatomy", "organs", "science"
 ];
 
 /**
