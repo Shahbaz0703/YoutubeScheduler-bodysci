@@ -1,5 +1,5 @@
 {
-  "nextVideoIndex": 45,
+  "nextVideoIndex": 46,
   "uploadedVideos": [
     "Video_001.mp4",
     "Video_002.mp4",
@@ -45,6 +45,7 @@
     "Video_042.mp4",
     "Video_043.mp4",
     "Video_044.mp4",
-    "Video_045.mp4"
+    "Video_045.mp4",
+    "Video_046.mp4"
   ]
 }
