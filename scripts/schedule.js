@@ -87,15 +87,36 @@ function runScheduler() {
   const vpd = Math.min(2, Math.max(1, config.videosPerDay || 1));
   const uploadTimes = config.uploadTimes || ["06:00", "12:30"];
   
-  // Parse start date
-  let startDate = new Date(config.startDate || new Date().toISOString().split('T')[0]);
+  // Parse start date: If a custom --start-date argument is provided, use it.
+  // Otherwise, if prior scheduled videos exist, resume from the day after the latest scheduled video.
+  const customStart = args.find(a => a.startsWith('--start-date='))?.split('=')[1]
+    || (args.includes('--start-date') ? args[args.indexOf('--start-date') + 1] : null);
+
+  let startDate;
+  if (customStart) {
+    startDate = new Date(customStart);
+  } else {
+    const scheduledWithDates = videos.filter(v => v.scheduledAt);
+    if (scheduledWithDates.length > 0) {
+      const sorted = scheduledWithDates.sort((a, b) => new Date(a.scheduledAt) - new Date(b.scheduledAt));
+      const lastScheduled = sorted[sorted.length - 1];
+      const lastDate = new Date(lastScheduled.scheduledAt);
+      lastDate.setDate(lastDate.getDate() + 1);
+      startDate = lastDate;
+    } else {
+      startDate = new Date(config.startDate || new Date().toISOString().split('T')[0]);
+    }
+  }
+
   if (isNaN(startDate.getTime())) {
     startDate = new Date();
   }
 
+  const startDateFormatted = startDate.toISOString().split('T')[0];
+
   console.log(`=== YouTube Shorts Scheduler ===`);
   console.log(`Mode: ${isDryRun ? 'DRY RUN (Preview Only)' : 'LIVE EXECUTION'}`);
-  console.log(`Start Date: ${config.startDate}`);
+  console.log(`Start Date: ${startDateFormatted}`);
   console.log(`Videos Per Day: ${vpd}`);
   console.log(`Upload Times (IST): ${uploadTimes.slice(0, vpd).join(', ')}`);
   console.log(`Pending Videos to Schedule: ${pendingVideos.length}`);
