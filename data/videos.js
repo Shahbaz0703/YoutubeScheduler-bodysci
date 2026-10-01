@@ -656,11 +656,11 @@ window.VIDEOS_DATA = {
       "title": "Doctors टूटी हुई जांघ की हड्डी (Femur Bone) को कैसे जोड़ती है? 🦴⚙️ #anatomy #3dmodel",
       "description": "Welcome to BodySci Edu — created and presented by Shahbaz Alam.\n\nDiscover what happens inside the human body through AI-assisted 3D visualization and educational visual storytelling.\n\nOur videos explore human anatomy, organs, digestion, physiology, pregnancy, reproductive health, conception, and fascinating biological processes in a simple and easy-to-understand way.\n\nAll content is independently conceptualized, designed, and curated by Shahbaz Alam. AI tools are used as visual aids for educational demonstrations, not as automated content production.\n\n⚠️ EDUCATIONAL DISCLAIMER:\nThis content is for general educational and learning purposes only. It is not medical advice and should not be used for diagnosis or treatment. For personal medical concerns, consult a qualified healthcare professional.\n\nSubscribe to BodySci Edu to explore and understand the human body.\n\nBodySci Edu — Explore. Understand. Learn the Human Body.\n\n#Anatomy #HealthFacts #HumanBody #MedicalEducation #alteredcontent",
       "tags": [ "BodySci Edu", "human body", "anatomy", "human anatomy", "anatomy fact", "health facts", "medical facts", "health education", "medical education", "science facts", "biology", "food fact", "nutrition", "food digestion", "digestion", "digestive system", "healthy food", "pregnancy", "pregnancy facts", "pregnancy health", "pregnancy safety", "pregnancy education", "pregnancy foods", "foods during pregnancy", "pregnancy positions", "ai", "physiology", "human physiology", "3d anatomy", "organs", "science" ],
-      "status": "scheduled",
+      "status": "published",
       "scheduledAt": "2026-10-01T00:30:00.000Z",
-      "youtubeVideoId": null,
-      "youtubeUrl": null,
-      "publishedAt": null,
+      "youtubeVideoId": "ESWtGZeDp7Y",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ESWtGZeDp7Y",
+      "publishedAt": "2026-10-01T06:25:11.942Z",
       "error": null
     },
     {
